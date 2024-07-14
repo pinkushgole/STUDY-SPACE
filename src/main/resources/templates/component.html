@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div th:fragment="header">
+
+		<div class="container-fluide"
+			style="height: 5px; background-color: teal"></div>
+		<div class="container-fluide p-3">
+			<div class="row">
+				<div class="col-md-12 text-success">
+					<h3>STUDY SPACE</h3>
+				</div>
+
+			</div>
+		</div>
+		<nav class="navbar navbar-expand-lg navbar-dark "
+			style="background-color: teal">
+
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ">
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/}"> <i class="fa-solid fa-house"></i> Home
+					</a></li>
+
+					<li class="nav-item active"><a class="nav-link" href=""
+						th:href="@{/about}"> <i class="fa-solid fa-user-pen"></i>
+							About Us
+					</a></li>
+
+					<li class="nav-item active"><a class="nav-link" href=""
+						th:href="@{/login}"><i
+							class="fa-sharp fa-solid fa-right-to-bracket "></i> Login</a></li>
+
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/signup}"><i class="fa-solid fa-user-plus"></i>
+							Sign Up</a></li>
+
+					<li class="nav-item active"><a class="nav-link" href=""
+						th:href="@{/contact}"><i class="fa-regular fa-address-card"></i>
+							Contact</a></li>
+
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/total_library}"><i
+							class="fa-solid fa-graduation-cap"></i>Total Library</a></li>
+
+				</ul>
+			</div>
+		</nav>
+
+	</div>
+
+	<div th:fragment="filter">
+		<div class="container m-3">
+			<!-- Large button groups (default and split) -->
+			<div class="btn-group">
+				<button class="btn btn-info btn-lg dropdown-toggle" type="button"
+					data-toggle="dropdown" aria-expanded="false">Address</button>
+				<div class="dropdown-menu">...</div>
+			</div>
+			<div class="btn-group">
+				<button class="btn btn-info btn-lg dropdown-toggle" type="button"
+					data-toggle="dropdown" aria-expanded="false">Price</button>
+				<div class="dropdown-menu">...</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div th:fragment="mini_footer">
+		<div class="container-fluide" style="background-color: black;">
+			<div class="row">
+				<div class="col-md-8 text-center">
+					<p class="text-white p-6 mt-3">STUDY SPACE
+						© 2023 - All rights Reserved. Developed & Designed by Pinkush gole</p>
+				</div>
+				<div class="col-md-4">
+					<a href=""> <i
+						class="fa-brands fa-square-facebook fa-2x text-primary p-3"></i></a> <a
+						href=""><i
+						class="fa-brands fa-instagram fa-2x text-danger p-3"></i></a> <a
+						href=""> <i
+						class="fa-brands fa-twitter fa-2x text-primary p-3"></i></a> <a
+						href=""><i
+						class="fa-brands fa-whatsapp fa-2x text-success  p-3"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:fragment="lheader">
+
+		<div class="container-fluide"
+			style="height: 5px; background-color: teal"></div>
+		<div class="container-fluide p-3">
+			<div class="row">
+				<div class="col-md-12 text-success">
+					<h3>STUDY SPACE</h3>
+				</div>
+
+			</div>
+		</div>
+
+		<nav class="navbar navbar-expand-lg navbar-dark "
+			style="background-color: teal">
+
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ">
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/library/home}"> <i class="fa-solid fa-house"></i>
+							Home
+					</a></li>
+
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/library/profile}"> <i class="fa-solid fa-house"></i>
+							Profile
+					</a></li>
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/library/add_more_details}"> <i
+							class="fa-solid fa-house"></i> Add More Details
+					</a></li>
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/library/add_Student}"> <i
+							class="fa-solid fa-house"></i> Add Student
+					</a></li>
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/library/total_student}"> <i
+							class="fa-solid fa-house"></i> Total Student
+					</a></li>
+					<li class="nav-item active"><a class="nav-link" href="#"
+						th:href="@{/library/setting}"><i class="fa-solid fa-user-plus"></i>
+							Setting</a></li>
+
+					<li class="nav-item active"><a class="nav-link" href=""
+						th:href="@{/logout}"><i class="fa-regular fa-address-card"></i>
+							Logout</a></li>
+
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+
+</body>
+</html>

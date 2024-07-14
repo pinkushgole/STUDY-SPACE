@@ -1,0 +1,114 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Library Home</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+	<!-- nav bar start -->
+	<div th:replace="~{component :: lheader}"></div>
+	<div class="container p-3">
+		<div class="container p-3">
+			<h3 class="text-center text-primary" th:text="${library.name}"></h3>
+
+			<table class="table p-4">
+				<tbody>
+					<tr>
+						<th>LIBRARY NAME :</th>
+						<td th:text="${library.name}"></td>
+					</tr>
+					<tr>
+						<th>EMAIL :</th>
+						<td th:text="${library.email}"></td>
+					</tr>
+					<tr>
+						<th>CONTACT :</th>
+						<td th:text="${library.contact}">/td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+	</div>
+
+	<div class="container p-3">
+		<h3 class="text-center text-primary">Add More Details</h3>
+
+		<form action="" th:action="@{/library/add_more_data}" method="post" enctype="multipart/form-data">
+			<div class="form-group ">
+				<div class="form-group ">
+
+					<label for="inputAddress">Total Seat</label> <input type="number"
+						name="totalSeat" class="form-control" id="inputAddress"
+						placeholder="Enter Number of Seat" required>
+
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">Full Day Price :</label> <input
+							type="number" name="hours24" class="form-control" id="inputEmail4"
+							placeholder="Enter Price" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputPassword4">12 Hours price :</label> <input
+							type="number" name="hours12" class="form-control" id="inputPassword4"
+							placeholder="Enter Price" required>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">8 Hours Price :</label> <input
+							type="number" name="hours8" class="form-control" id="inputEmail4"
+							placeholder="Enter Price" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputPassword4">Seat Reservation price:</label> <input
+							type="number" name="reserve" class="form-control" id="inputPassword4"
+							placeholder="Enter Price" required>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label for="exampleFormControlFile1">Library Image</label> <input
+						type="file" name="image" class="form-control-file" id="exampleFormControlFile1">
+				</div>
+
+
+				<button type="submit" class="btn btn-primary">Update</button>
+				<a href="" th:href="@{/library/home}"
+					class="btn btn-primary text-white mx-2">Back</a>
+
+			</div>
+		</form>
+	</div>
+
+
+
+	<div th:replace="~{component :: mini_footer}"></div>
+
+</body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+</html>
