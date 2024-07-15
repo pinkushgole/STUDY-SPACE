@@ -23,12 +23,12 @@
 				<div class="form-group ">
 					<div class="form-group">
 						<label for="inputAddress">Library Name</label> <input type="text"
-							name="name" class="form-control" id="inputAddress"
-							placeholder="Enter Library Name" required>
+							name="name" class="form-control" th:value="${library.name}"
+							id="inputAddress" disabled="disabled" placeholder="Enter Library Name" required>
 					</div>
 					<label for="inputAddress">Email</label> <input type="email"
-						name="email" class="form-control" id="inputAddress"
-						placeholder="Enter Email" required>
+						name="email" th:value="${library.email}" class="form-control"
+						id="inputAddress" disabled="disabled" placeholder="Enter Email" required>
 				</div>
 			</div>
 
@@ -40,10 +40,12 @@
 
 
 	<div class="container " id="SING_UP">
-		<form action="" th:action="@{/}" method="post">
+		<form action="" th:action="@{/library/library_edit}" method="post" enctype="multipart/form-data">
 
-         <div class="form-group">
-				<label for="inputAddress">Password </label> <input type="password"
+			<div class="form-group">
+				<input type="hidden" name="id" th:value="${library.id}"> 
+				<label
+					for="inputAddress">Enter New Password </label> <input type="password"
 					id="inputAddress" name="password"
 					placeholder="Enter Password Number" class="form-control" required>
 			</div>
@@ -78,7 +80,6 @@
 
 			</div>
 
-			<div class="form-group ">
 				<div class="form-group ">
 
 					<label for="inputAddress">Total Seat</label> <input type="number"
@@ -117,15 +118,13 @@
 				<div class="form-group">
 					<label for="exampleFormControlFile1">Library Image</label> <input
 						type="file" name="image" class="form-control-file"
-						id="exampleFormControlFile1">
+						id="exampleFormControlFile1" required>
 				</div>
 
 
 				<button type="submit" class="btn btn-primary">Update</button>
 				<a href="" th:href="@{/library/home}"
 					class="btn btn-primary text-white mx-2">Back</a>
-
-
 		</form>
 	</div>
 

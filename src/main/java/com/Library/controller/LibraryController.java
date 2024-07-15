@@ -55,7 +55,11 @@ public class LibraryController {
 	}
 
 	@GetMapping("/profile")
-	public String open_ProfilePage() {
+	public String open_ProfilePage(Model model, Principal principal) {
+		String name = principal.getName();
+		Library library = this.library_Repository.findByEmail(name);
+
+		model.addAttribute("library", library);
 		return "library/profile";
 	}
 
@@ -117,9 +121,9 @@ public class LibraryController {
 		s.setRemain_payment(remain_payment);
 		s.setLibrary(library);
 		library.getStudent().add(s);
-      
+
 		this.library_Repository.save(library);
-		//Student stu = this.student_Repository.save(s);
+		// Student stu = this.student_Repository.save(s);
 
 		return "library/add_Student";
 	}
@@ -170,52 +174,110 @@ public class LibraryController {
 
 		return "library/add_more_details";
 	}
-	
+
 	@GetMapping("/delete")
-	public String deleteStudent(@RequestParam("id") int id)
-	{
+	public String deleteStudent(@RequestParam("id") int id) {
 		try {
-			Student st=this.student_Repository.findById(id).get();
+			Student st = this.student_Repository.findById(id).get();
 			student_Repository.delete(st);
 			System.out.println("deletion succesfull");
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
+
 		return "redirect:/library/total_student";
 	}
-	
+
 	@GetMapping("/edit")
-	public String editStudent(@RequestParam("id") int id,Model model) {
-		
+	public String editStudent(@RequestParam("id") int id, Model model) {
+
 		try {
-			Student student=this.student_Repository.findById(id).get();
-			model.addAttribute("student",student);	
-		}catch(Exception e) {
+			Student student = this.student_Repository.findById(id).get();
+			model.addAttribute("student", student);
+		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
+
 		return "library/Edit_Student";
 	}
-	
+
 	@PostMapping("/edit_student")
-	public String editStudentInfo(@RequestParam("id")int id,@RequestParam("sname") String sname,
+	public String editStudentInfo(@RequestParam("id") int id, @RequestParam("sname") String sname,
 			@RequestParam("contact") String contact, @RequestParam("sdate") String sdate,
 			@RequestParam("edate") String edate, @RequestParam("payment") double payment,
 			@RequestParam("remain_payment") double remain_payment) {
-		
-		Student student=this.student_Repository.findById(id).get();
+
+		Student student = this.student_Repository.findById(id).get();
 		student.setSname(sname);
 		student.setContact(contact);
 		student.setSdate(sdate);
 		student.setEdate(edate);
 		student.setPayment(payment);
 		student.setRemain_payment(remain_payment);
-		
-		Student st=this.student_Repository.save(student);
-		
+
+		Student st = this.student_Repository.save(student);
+
 		return "redirect:/library/total_student";
+	}
+
+	@PostMapping("/library_edit")
+	public String editlibrary(@RequestParam(value = "image", required = false) MultipartFile image, Model model,
+			@RequestParam("id") int id, @RequestParam(value = "password", required = false) String password,
+			@RequestParam(value = "contact", required = false) String contact,
+			@RequestParam(value = "location", required = false) String location,
+			@RequestParam(value = "city", required = false) String city,
+			@RequestParam(value = "state", required = false) String state,
+			@RequestParam(value = "pincode", required = false) String pincode,
+			@RequestParam(value = "totalSeat", required = false) int seat,
+			@RequestParam(value = "hours24", required = false) double hours24,
+			@RequestParam(value = "hours12", required = false) double hours12,
+			@RequestParam(value = "hours8", required = false) double hours8,
+			@RequestParam(value = "reserve", required = false) double reserve) {
+
+		String address = location + "," + city + "," + state + pincode;
+		try {
+			Library li = this.library_Repository.findById(id).get();
+			Path imagePath = Paths.get("static/img/" + li.getImage());
+			if (imagePath == null) {
+				Files.delete(imagePath);
+			} else {
+				System.out.println("image not found");
+			}
+
+			File file = new ClassPathResource("static/img").getFile();
+
+			Path path = Paths.get(file.getAbsolutePath() + File.separator + image.getOriginalFilename());
+
+			Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+			li.setImage(image.getOriginalFilename());
+
+			li.setPassword(password);
+
+			li.setCity(city);
+
+			li.setContact(contact);
+
+			li.setLocation(location);
+
+			li.setHours12(hours12);
+
+			li.setHours24(hours24);
+
+			li.setHours8(hours8);
+
+			li.setReserve(reserve);
+
+			li.setSeat(seat);
+
+			Library lib = this.library_Repository.save(li);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return "redirect:/library/home";
 	}
 
 }
