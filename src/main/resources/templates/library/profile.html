@@ -13,12 +13,124 @@
 <body>
 
 	<!-- nav bar start -->
-<div th:replace="~{component :: lheader}"></div>
-	
+	<div th:replace="~{component :: lheader}"></div>
 
-	
+	<div class="container p-3">
+		<h3 class="text-center text-primary">Edit Profile</h3>
 
-    <div style="height:200px"></div>
+		<form action="#" method="post">
+			<div class="form-group">
+				<div class="form-group ">
+					<div class="form-group">
+						<label for="inputAddress">Library Name</label> <input type="text"
+							name="name" class="form-control" id="inputAddress"
+							placeholder="Enter Library Name" required>
+					</div>
+					<label for="inputAddress">Email</label> <input type="email"
+						name="email" class="form-control" id="inputAddress"
+						placeholder="Enter Email" required>
+				</div>
+			</div>
+
+
+
+		</form>
+	</div>
+
+
+
+	<div class="container " id="SING_UP">
+		<form action="" th:action="@{/}" method="post">
+
+         <div class="form-group">
+				<label for="inputAddress">Password </label> <input type="password"
+					id="inputAddress" name="password"
+					placeholder="Enter Password Number" class="form-control" required>
+			</div>
+
+			<div class="form-group">
+				<label for="inputAddress">Contact </label> <input type="text"
+					id="inputAddress" name="contact" placeholder="Enter Contact Number"
+					class="form-control" required>
+			</div>
+
+			<div class="form-group">
+				<label for="inputAddress">Location</label> <input type="text"
+					name="location" class="form-control" id="inputAddress"
+					placeholder="Enter Library Location" required>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="inputCity">City</label> <input type="text" name="city"
+						class="form-control" id="inputCity" placeholder="Enter City Name"
+						required>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="inputState">State</label> <input type="text"
+						name="state" class="form-control" id="inputAddress"
+						placeholder="Enter State Name" required>
+				</div>
+				<div class="form-group col-md-2">
+					<label for="inputZip">Pin Code</label> <input type="text"
+						name="pincode" class="form-control" placeholder="Enter Area Code"
+						id="inputZip" required>
+				</div>
+
+			</div>
+
+			<div class="form-group ">
+				<div class="form-group ">
+
+					<label for="inputAddress">Total Seat</label> <input type="number"
+						name="totalSeat" class="form-control" id="inputAddress"
+						placeholder="Enter Number of Seat" required>
+
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">Full Day Price :</label> <input
+							type="number" name="hours24" class="form-control"
+							id="inputEmail4" placeholder="Enter Price" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputPassword4">12 Hours price :</label> <input
+							type="number" name="hours12" class="form-control"
+							id="inputPassword4" placeholder="Enter Price" required>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">8 Hours Price :</label> <input
+							type="number" name="hours8" class="form-control" id="inputEmail4"
+							placeholder="Enter Price" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputPassword4">Seat Reservation price:</label> <input
+							type="number" name="reserve" class="form-control"
+							id="inputPassword4" placeholder="Enter Price" required>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label for="exampleFormControlFile1">Library Image</label> <input
+						type="file" name="image" class="form-control-file"
+						id="exampleFormControlFile1">
+				</div>
+
+
+				<button type="submit" class="btn btn-primary">Update</button>
+				<a href="" th:href="@{/library/home}"
+					class="btn btn-primary text-white mx-2">Back</a>
+
+
+		</form>
+	</div>
+
+
+	<div style="height: 200px"></div>
 	<div th:replace="~{component :: mini_footer}"></div>
 
 </body>

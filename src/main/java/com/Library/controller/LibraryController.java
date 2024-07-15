@@ -172,7 +172,7 @@ public class LibraryController {
 	}
 	
 	@GetMapping("/delete")
-	public String editStudent(@RequestParam("id") int id)
+	public String deleteStudent(@RequestParam("id") int id)
 	{
 		try {
 			Student st=this.student_Repository.findById(id).get();
@@ -182,6 +182,38 @@ public class LibraryController {
 		}catch(Exception e) {
 			System.out.println(e);
 		}
+		
+		return "redirect:/library/total_student";
+	}
+	
+	@GetMapping("/edit")
+	public String editStudent(@RequestParam("id") int id,Model model) {
+		
+		try {
+			Student student=this.student_Repository.findById(id).get();
+			model.addAttribute("student",student);	
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		return "library/Edit_Student";
+	}
+	
+	@PostMapping("/edit_student")
+	public String editStudentInfo(@RequestParam("id")int id,@RequestParam("sname") String sname,
+			@RequestParam("contact") String contact, @RequestParam("sdate") String sdate,
+			@RequestParam("edate") String edate, @RequestParam("payment") double payment,
+			@RequestParam("remain_payment") double remain_payment) {
+		
+		Student student=this.student_Repository.findById(id).get();
+		student.setSname(sname);
+		student.setContact(contact);
+		student.setSdate(sdate);
+		student.setEdate(edate);
+		student.setPayment(payment);
+		student.setRemain_payment(remain_payment);
+		
+		Student st=this.student_Repository.save(student);
 		
 		return "redirect:/library/total_student";
 	}
