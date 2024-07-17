@@ -12,13 +12,25 @@
 </head>
 <body>
 	<div th:replace="~{component :: header}"></div>
-	<div th:replace="~{component :: filter}"></div>
+	<div class="container m-3">
+			 <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button"
+                id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">Select City</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <a class="dropdown-item" th:each="city : ${city}" th:text="${city}" th:href="@{/city_filter(city=${city})}"></a>
+                <a class="dropdown-item"  th:href="@{/total_library}">All Cities</a>
+            </div>
+        </div>
+		
+	</div>
 	<div class="container-fluid  m-3 p-6">
 
 		<div class="row  m-3 ">
 			<div class="col-md-3" th:each="library : ${libraries}">
 				<div class="card mt-4">
-					<img th:src="@{'/img/'+${library.image}}"  style="width: 100%; height: 300px" class="card-img-top"
+					<img th:src="@{'/img/'+${library.image}}"
+						style="width: 100%; height: 300px" class="card-img-top"
 						alt="Item Image">
 					<div class="card-body">
 						<h5 class="card-title" th:text="${library.name}">>Item Name</h5>
@@ -29,16 +41,19 @@
 							<strong>Address: </strong><span th:text="${library.location}"></span>
 						</p>
 						<p class="card-text">
-							<strong>Full Day Price: </strong><span th:text="${library.hours24}"></span>
+							<strong>Full Day Price: </strong><span
+								th:text="${library.hours24}"></span>
 						</p>
 						<p class="card-text">
-							<strong>12 Hours Price: </strong><span th:text="${library.hours12}"></span>
+							<strong>12 Hours Price: </strong><span
+								th:text="${library.hours12}"></span>
 						</p>
 						<p class="card-text">
 							<strong>8 Hours Price: </strong><span th:text="${library.hours8}"></span>
 						</p>
 						<p class="card-text">
-							<strong>Reservation Price: </strong><span th:text="${library.reserve}"></span>
+							<strong>Reservation Price: </strong><span
+								th:text="${library.reserve}"></span>
 						</p>
 
 					</div>
@@ -47,7 +62,7 @@
 		</div>
 	</div>
 
-	
+
 
 
 

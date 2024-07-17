@@ -61,6 +61,12 @@ public class HomeController {
 		
 		model.addAttribute("libraries",librarys);
 		
+		
+		List<String> city=this.library_Repository.findAllCity();
+		//System.out.println(city);
+		
+		model.addAttribute("city",city);
+		
 		return "total_library";
 	}
 	
@@ -89,7 +95,7 @@ public class HomeController {
 		l.setPassword(passwordEncoder.encode(password));
 		l.setContact(contact);
 		l.setLocation(address.toUpperCase());
-		l.setCity(city);
+		l.setCity(city.toUpperCase());
 		l.setRole("ROLE_USER");
 		Library result=this.library_Repository.save(l);
 		
@@ -103,12 +109,26 @@ public class HomeController {
 	{
 		String name=fname+" "+lname;
 		Contact c=new Contact();
-		c.setName(name);
+		c.setName(name.toUpperCase());
 		c.setEmail(email);
 		c.setContact(contact);
-		c.setMessage(message);
+		c.setMessage(message.toUpperCase());
 		Contact contact1=this.contact_Repo.save(c);
 		return "redirect:contact";
+	}
+	
+	@GetMapping("/city_filter")
+	public String cityfilter(@RequestParam("city")String city,Model model) {
+		
+		List<Library> library=this.library_Repository.findAllByCity(city);
+		model.addAttribute("libraries",library);
+		System.out.println(city);
+		
+		List<String> city1=this.library_Repository.findAllCity();
+		//System.out.println(city);
+		
+		model.addAttribute("city",city1);
+		return "total_library";
 	}
 	
 }

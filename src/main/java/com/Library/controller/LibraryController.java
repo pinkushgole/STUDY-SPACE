@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,8 @@ public class LibraryController {
 		String name = principal.getName();
 		// System.out.println(name);
 		Library library = this.library_Repository.findByEmail(name);
+		
+		
 
 		model.addAttribute("library", library);
 		return "library/libraryHome";
@@ -105,7 +108,7 @@ public class LibraryController {
 		String name = principal.getName();
 		Library library = this.library_Repository.findByEmail(name);
 
-		System.out.println(sname);
+		System.out.println(sname.toUpperCase());
 		System.out.println(contact);
 		System.out.println(sdate);
 		System.out.println(edate);
@@ -209,7 +212,7 @@ public class LibraryController {
 			@RequestParam("remain_payment") double remain_payment) {
 
 		Student student = this.student_Repository.findById(id).get();
-		student.setSname(sname);
+		student.setSname(sname.toUpperCase());
 		student.setContact(contact);
 		student.setSdate(sdate);
 		student.setEdate(edate);
@@ -253,13 +256,13 @@ public class LibraryController {
 
 			li.setImage(image.getOriginalFilename());
 
-			li.setPassword(password);
+			li.setPassword(passwordEncoder.encode(password));
 
-			li.setCity(city);
+			li.setCity(city.toUpperCase());
 
 			li.setContact(contact);
 
-			li.setLocation(location);
+			li.setLocation(location.toUpperCase());
 
 			li.setHours12(hours12);
 
@@ -279,5 +282,14 @@ public class LibraryController {
 
 		return "redirect:/library/home";
 	}
-
+//	
+//	public  List<String> allCityName() {
+//		
+//		List<String> city=this.library_Repository.findAllCity();
+//		System.out.println(city);
+//		
+//		return city;
+//		
+//	}
+	
 }
