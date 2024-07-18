@@ -26,7 +26,8 @@
 		<div class="container mt-2" style="height: 53vh">
 			<div class="card">
 				<div class="card-body">
-					<form id="login-form" class="form" action="" th:action="@{loginprocess}" method="post">
+					<form id="login-form" class="form" action=""
+						th:action="@{loginprocess}" method="post">
 
 						<div class="form-group">
 
@@ -45,10 +46,20 @@
 
 						<button type="submit" class="btn btn-primary">Login</button>
 						<a href="" th:href="@{/}" class="btn btn-primary text-white mx-2">Back</a>
-						<br> <a href="" th:href="@{/signup}">
-							<P>Create an Account.?</P>
-						</a>
+						<br>
+						<div class="row">
+							<div class="col">
+								<a href="" th:href="@{/signup}">
+									<p class="text-left">Create an Account.?</p>
+								</a>
+							</div>
+							<div class="col text-right">
+								<a href="" th:href="@{/forget_password}">
+									<p class="text-right">Forget Password</p>
+								</a>
+							</div>
 
+						</div>
 					</form>
 				</div>
 			</div>

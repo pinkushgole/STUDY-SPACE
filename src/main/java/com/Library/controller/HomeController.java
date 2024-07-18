@@ -1,6 +1,7 @@
 package com.Library.controller;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import com.Library.dao.Contact_Repo;
 import com.Library.dao.Library_Repository;
 import com.Library.model.Contact;
 import com.Library.model.Library;
+import com.Library.service.Email_Service;
 
 @Controller
 public class HomeController {
@@ -27,6 +29,12 @@ public class HomeController {
 	
 	@Autowired
 	private Contact_Repo contact_Repo;
+	
+	@Autowired
+	private Email_Service email_Service;
+	
+	private static int otp;
+	private static int id;
 	
 	@GetMapping("/")
 	public String home() {
@@ -129,6 +137,76 @@ public class HomeController {
 		
 		model.addAttribute("city",city1);
 		return "total_library";
+	}
+	
+	@GetMapping("/forget_password")
+	public String email_verfiy_page() {
+		return "send_otp";
+	}
+	
+	@PostMapping("/email")
+	public String opt_send(@RequestParam("email")String Email,Model model) {
+		
+		Library library=this.library_Repository.findByEmail(Email);
+		if(library!=null) {
+			//System.out.println("email is available");
+			
+			otp=this.email_Service.opt_Generted();
+			
+			System.out.println(otp);
+			
+			String message = "OTP : " +otp;
+			String subject = "OTP";
+			String to = Email;
+			String from = "xyz@gmail.com";
+			
+			this.email_Service.sendEmail(to, from, subject, message);
+			
+			id=library.getId();
+			
+		}else {
+			
+			
+			System.out.println("email is not available");
+		}
+		
+		return "send_otp";
+	}
+	
+	@PostMapping("/otpSend")
+	public String otp_Verification(@RequestParam("otp")int otpsend,Model model) {
+		
+		if(otpsend==otp) {
+			
+			return "new_password";
+		}
+		
+		return "send_otp";
+		
+		
+	}
+	
+	@PostMapping("/new_Password")
+	public String new_Password(@RequestParam("password")String password,@RequestParam("confirm_password")String confirm_password) {
+				
+		System.out.println(id);
+		System.out.println(password);
+		System.out.println(confirm_password);
+		if(password.equals(confirm_password)) {
+			
+			Library li=this.library_Repository.findById(id).get();
+			
+			li.setPassword(passwordEncoder.encode(confirm_password));
+			
+			Library l=this.library_Repository.save(li);
+			
+			System.out.println("password change");
+			
+		}else {
+			System.out.println("password not same");
+		}
+		
+		return "send_otp";
 	}
 	
 }

@@ -16,6 +16,8 @@ public interface Library_Repository extends JpaRepository<Library, Integer> {
 	@Query("SELECT DISTINCT l.city FROM Library l")
 	List<String> findAllCity();
 	
-	  List<Library> findAllByCity(String city);
+	 List<Library> findAllByCity(String city);
+	 
+	 List<Library> findAllByEmail(String email);
 
 }
