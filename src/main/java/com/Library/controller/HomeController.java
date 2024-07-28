@@ -61,6 +61,11 @@ public class HomeController {
 		return "about";
 	}
 
+	@GetMapping("/mission_vision")
+	public String show_mission_vision_page() {
+		return "mission_vision";
+	}
+
 	@GetMapping("/total_library")
 	public String show_total_library_page(Model model) {
 
