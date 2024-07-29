@@ -45,17 +45,15 @@ public class LibraryController {
 		String name = principal.getName();
 		// System.out.println(name);
 		Library library = this.library_Repository.findByEmail(name);
-		
-		
 
 		model.addAttribute("library", library);
 		return "library/libraryHome";
 	}
 
-	@GetMapping("/setting")
-	public String open_settingPage() {
-		return "library/setting";
-	}
+	/*
+	 * @GetMapping("/setting") public String open_settingPage() { return
+	 * "library/setting"; }
+	 */
 
 	@GetMapping("/profile")
 	public String open_ProfilePage(Model model, Principal principal) {
@@ -129,53 +127,6 @@ public class LibraryController {
 		// Student stu = this.student_Repository.save(s);
 
 		return "library/add_Student";
-	}
-
-	@PostMapping("/add_more_data")
-	public String setMoreData(@RequestParam("image") MultipartFile image, Model model, Principal principal,
-			@RequestParam("totalSeat") int seat, @RequestParam("hours24") double hours24,
-			@RequestParam("hours12") double hours12, @RequestParam("hours8") double hours8,
-			@RequestParam("reserve") double reserve) {
-
-		try {
-			String name = principal.getName();
-			Library library = this.library_Repository.findByEmail(name);
-			library.setSeat(seat);
-			library.setHours24(hours24);
-			library.setHours12(hours12);
-			library.setHours8(hours8);
-			library.setReserve(reserve);
-
-			if (image.isEmpty()) {
-				System.out.println("image is empty");
-			} else {
-				// upload the file to folder
-
-				File file = new ClassPathResource("static/img").getFile();
-
-				Path path = Paths.get(file.getAbsolutePath() + File.separator + image.getOriginalFilename());
-
-				Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-				System.out.println("image upload");
-				library.setImage(image.getOriginalFilename());
-			}
-			Library l = this.library_Repository.save(library);
-			model.addAttribute("library", library);
-
-		} catch (Exception e) {
-			System.out.println(e);
-			// error message
-		}
-
-//		System.out.println(seat);
-//		System.out.println(hours24);
-//		System.out.println(hours12);
-//		System.out.println(hours8);
-//		System.out.println(reserve);
-//		System.out.println(image.getOriginalFilename());
-
-		return "library/add_more_details";
 	}
 
 	@GetMapping("/delete")
@@ -282,6 +233,91 @@ public class LibraryController {
 
 		return "redirect:/library/home";
 	}
+
+	@GetMapping("/edit_pic_page")
+	public String edit_pic_page(@RequestParam("id") int id, Model model) {
+		try {
+			Library library = this.library_Repository.findById(id).get();
+//			System.out.println("Library:" + library);
+			model.addAttribute("library", library);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "library/edit_profile";
+	}
+
+	@PostMapping("/edit_photo")
+	public String editpic(@RequestParam("image") MultipartFile image, @RequestParam("id") int id) {
+
+		System.out.println("id:" + id);
+		try {
+			Library li = this.library_Repository.findById(id).get();
+			Path imagePath = Paths.get("static/img/" + li.getImage());
+			if (imagePath == null) {
+				Files.delete(imagePath);
+			} else {
+				System.out.println("image not found");
+			}
+			
+			File file = new ClassPathResource("static/img").getFile();
+
+			Path path = Paths.get(file.getAbsolutePath() + File.separator + image.getOriginalFilename());
+
+			Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+			li.setImage(image.getOriginalFilename());
+			
+			Library lib = this.library_Repository.save(li);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "redirect:/library/home";
+	}
+
+	/*
+	 * @PostMapping("/add_more_data") public String
+	 * setMoreData(@RequestParam("image") MultipartFile image, Model model,
+	 * Principal principal,
+	 * 
+	 * @RequestParam("totalSeat") int seat, @RequestParam("hours24") double hours24,
+	 * 
+	 * @RequestParam("hours12") double hours12, @RequestParam("hours8") double
+	 * hours8,
+	 * 
+	 * @RequestParam("reserve") double reserve) {
+	 * 
+	 * try { String name = principal.getName(); Library library =
+	 * this.library_Repository.findByEmail(name); library.setSeat(seat);
+	 * library.setHours24(hours24); library.setHours12(hours12);
+	 * library.setHours8(hours8); library.setReserve(reserve);
+	 * 
+	 * if (image.isEmpty()) { System.out.println("image is empty"); } else { //
+	 * upload the file to folder
+	 * 
+	 * File file = new ClassPathResource("static/img").getFile();
+	 * 
+	 * Path path = Paths.get(file.getAbsolutePath() + File.separator +
+	 * image.getOriginalFilename());
+	 * 
+	 * Files.copy(image.getInputStream(), path,
+	 * StandardCopyOption.REPLACE_EXISTING);
+	 * 
+	 * System.out.println("image upload");
+	 * library.setImage(image.getOriginalFilename()); } Library l =
+	 * this.library_Repository.save(library); model.addAttribute("library",
+	 * library);
+	 * 
+	 * } catch (Exception e) { System.out.println(e); // error message }
+	 * 
+	 * // System.out.println(seat); // System.out.println(hours24); //
+	 * System.out.println(hours12); // System.out.println(hours8); //
+	 * System.out.println(reserve); //
+	 * System.out.println(image.getOriginalFilename());
+	 * 
+	 * return "redirect:library/home"; }
+	 */
+
 //	
 //	public  List<String> allCityName() {
 //		
@@ -291,5 +327,5 @@ public class LibraryController {
 //		return city;
 //		
 //	}
-	
+
 }

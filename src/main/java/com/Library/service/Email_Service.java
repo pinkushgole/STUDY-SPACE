@@ -36,7 +36,7 @@ public class Email_Service {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 
-				return new PasswordAuthentication("", "");
+				return new PasswordAuthentication("");
 			}
 
 		});
