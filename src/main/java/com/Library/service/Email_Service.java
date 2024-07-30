@@ -18,7 +18,7 @@ public class Email_Service {
 	public static void sendEmail(String to, String from, String subject, String message) {
 
 		// variable for gamil
-		String host = "";
+		String host = "smtp.gmail.com";
 
 		// get the system properties
 		Properties properies = System.getProperties();
@@ -36,7 +36,7 @@ public class Email_Service {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 
-				return new PasswordAuthentication("");
+				return new PasswordAuthentication("javaprogrammer0407@gmail.com", "crki fyzv xxxg kduo");
 			}
 
 		});

@@ -17,15 +17,14 @@
 	<div class="container p-3">
 		<h3 class="text-center text-primary">Edit Profile Photo</h3>
 
-		<form action="" th:action="@{/library/edit_photo}" method="post"
-			enctype="multipart/form-data">
+		<form action="" th:action="@{/library/edit_seat}" method="post">
 			<div class="form-group ">
 
 				<div class="form-group">
-					<input type="hidden" name="id" th:value="${library.id}"> <label
-						for="exampleFormControlFile1">Library Image</label> <input
-						type="file" name="image" class="form-control-file"
-						id="exampleFormControlFile1">
+					<input type="hidden" name="id" th:value="${library.id}">
+					<label for="inputAddress">Total Seat</label> <input type="number"
+						name="totalSeat" class="form-control" id="inputAddress"
+						placeholder="Enter Number of Seat" required>
 				</div>
 
 

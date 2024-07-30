@@ -50,20 +50,6 @@ public class LibraryController {
 		return "library/libraryHome";
 	}
 
-	/*
-	 * @GetMapping("/setting") public String open_settingPage() { return
-	 * "library/setting"; }
-	 */
-
-	@GetMapping("/profile")
-	public String open_ProfilePage(Model model, Principal principal) {
-		String name = principal.getName();
-		Library library = this.library_Repository.findByEmail(name);
-
-		model.addAttribute("library", library);
-		return "library/profile";
-	}
-
 	@GetMapping("/add_Student")
 	public String open_AddStudentPage() {
 		return "library/add_Student";
@@ -175,65 +161,7 @@ public class LibraryController {
 		return "redirect:/library/total_student";
 	}
 
-	@PostMapping("/library_edit")
-	public String editlibrary(@RequestParam(value = "image", required = false) MultipartFile image, Model model,
-			@RequestParam("id") int id, @RequestParam(value = "password", required = false) String password,
-			@RequestParam(value = "contact", required = false) String contact,
-			@RequestParam(value = "location", required = false) String location,
-			@RequestParam(value = "city", required = false) String city,
-			@RequestParam(value = "state", required = false) String state,
-			@RequestParam(value = "pincode", required = false) String pincode,
-			@RequestParam(value = "totalSeat", required = false) int seat,
-			@RequestParam(value = "hours24", required = false) double hours24,
-			@RequestParam(value = "hours12", required = false) double hours12,
-			@RequestParam(value = "hours8", required = false) double hours8,
-			@RequestParam(value = "reserve", required = false) double reserve) {
-
-		String address = location + "," + city + "," + state + pincode;
-		try {
-			Library li = this.library_Repository.findById(id).get();
-			Path imagePath = Paths.get("static/img/" + li.getImage());
-			if (imagePath == null) {
-				Files.delete(imagePath);
-			} else {
-				System.out.println("image not found");
-			}
-
-			File file = new ClassPathResource("static/img").getFile();
-
-			Path path = Paths.get(file.getAbsolutePath() + File.separator + image.getOriginalFilename());
-
-			Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-			li.setImage(image.getOriginalFilename());
-
-			li.setPassword(passwordEncoder.encode(password));
-
-			li.setCity(city.toUpperCase());
-
-			li.setContact(contact);
-
-			li.setLocation(location.toUpperCase());
-
-			li.setHours12(hours12);
-
-			li.setHours24(hours24);
-
-			li.setHours8(hours8);
-
-			li.setReserve(reserve);
-
-			li.setSeat(seat);
-
-			Library lib = this.library_Repository.save(li);
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-		return "redirect:/library/home";
-	}
-
+	
 	@GetMapping("/edit_pic_page")
 	public String edit_pic_page(@RequestParam("id") int id, Model model) {
 		try {
@@ -258,7 +186,7 @@ public class LibraryController {
 			} else {
 				System.out.println("image not found");
 			}
-			
+
 			File file = new ClassPathResource("static/img").getFile();
 
 			Path path = Paths.get(file.getAbsolutePath() + File.separator + image.getOriginalFilename());
@@ -266,9 +194,218 @@ public class LibraryController {
 			Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
 			li.setImage(image.getOriginalFilename());
-			
+
 			Library lib = this.library_Repository.save(li);
-			
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "redirect:/library/home";
+	}
+
+	@GetMapping("/edit_contact_page")
+	public String edit_contact_page(@RequestParam("id") int id, Model model) {
+		try {
+			Library library = this.library_Repository.findById(id).get();
+//			System.out.println("Library:" + library);
+			model.addAttribute("library", library);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "library/edit_contact";
+	}
+
+	@PostMapping("/edit_contact")
+	public String editContact(@RequestParam("id") int id, @RequestParam("contact") String contact) {
+
+		System.out.println("id:" + id);
+		try {
+			Library li = this.library_Repository.findById(id).get();
+			li.setContact(contact);
+			Library lib = this.library_Repository.save(li);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "redirect:/library/home";
+	}
+
+	@GetMapping("/edit_address_page")
+	public String edit_address_page(@RequestParam("id") int id, Model model) {
+		try {
+			Library library = this.library_Repository.findById(id).get();
+//			System.out.println("Library:" + library);
+			model.addAttribute("library", library);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "library/edit_address";
+	}
+
+	@PostMapping("/edit_address")
+	public String editAdress(@RequestParam("id") int id,
+			@RequestParam(value = "location", required = false) String location,
+			@RequestParam(value = "city", required = false) String city,
+			@RequestParam(value = "state", required = false) String state,
+			@RequestParam(value = "pincode", required = false) String pincode) {
+
+		System.out.println("id:" + id);
+		try {
+			Library li = this.library_Repository.findById(id).get();
+			String address = location + "," + city + "," + state + "," + pincode;
+			li.setLocation(address.toUpperCase());
+			li.setCity(city.toUpperCase());
+			Library lib = this.library_Repository.save(li);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "redirect:/library/home";
+	}
+
+	@GetMapping("/edit_seat_page")
+	public String edit_seat_page(@RequestParam("id") int id, Model model) {
+		try {
+			Library library = this.library_Repository.findById(id).get();
+//			System.out.println("Library:" + library);
+			model.addAttribute("library", library);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "library/edit_seat";
+	}
+
+	@PostMapping("/edit_seat")
+	public String editseat(@RequestParam("id") int id, @RequestParam(value = "hours24", required = false) int seat) {
+
+		System.out.println("id:" + id);
+		try {
+			Library li = this.library_Repository.findById(id).get();
+
+			li.setSeat(seat);
+
+			Library lib = this.library_Repository.save(li);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "redirect:/library/home";
+	}
+
+	@GetMapping("/edit_fullday_page")
+	public String edit_fullday_page(@RequestParam("id") int id, Model model) {
+		try {
+			Library library = this.library_Repository.findById(id).get();
+//			System.out.println("Library:" + library);
+			model.addAttribute("library", library);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "library/edit_hours24";
+	}
+
+	@PostMapping("/edit_fullday")
+	public String editFullDay(@RequestParam("id") int id,
+			@RequestParam(value = "hours24", required = false) double hours24) {
+
+		System.out.println("id:" + id);
+		try {
+			Library li = this.library_Repository.findById(id).get();
+
+			li.setHours24(hours24);
+
+			Library lib = this.library_Repository.save(li);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "redirect:/library/home";
+	}
+
+	@GetMapping("/edit_hours12_page")
+	public String edit_hours12_page(@RequestParam("id") int id, Model model) {
+		try {
+			Library library = this.library_Repository.findById(id).get();
+//			System.out.println("Library:" + library);
+			model.addAttribute("library", library);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "library/edit_hours12";
+	}
+
+	@PostMapping("/edit_hours12")
+	public String edithours12(@RequestParam("id") int id,
+			@RequestParam(value = "hours12", required = false) double hours12) {
+
+		System.out.println("id:" + id);
+		try {
+			Library li = this.library_Repository.findById(id).get();
+
+			li.setHours12(hours12);
+
+			Library lib = this.library_Repository.save(li);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "redirect:/library/home";
+	}
+
+	@GetMapping("/edit_hours8_page")
+	public String edit_hours8_page(@RequestParam("id") int id, Model model) {
+		try {
+			Library library = this.library_Repository.findById(id).get();
+//			System.out.println("Library:" + library);
+			model.addAttribute("library", library);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "library/edit_hours8";
+	}
+
+	@PostMapping("/edit_hours8")
+	public String edithours8(@RequestParam("id") int id,
+			@RequestParam(value = "hours8", required = false) double hours8) {
+
+		System.out.println("id:" + id);
+		try {
+			Library li = this.library_Repository.findById(id).get();
+
+			li.setHours8(hours8);
+
+			Library lib = this.library_Repository.save(li);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "redirect:/library/home";
+	}
+
+	@GetMapping("/edit_reservation_page")
+	public String edit_reservation_page(@RequestParam("id") int id, Model model) {
+		try {
+			Library library = this.library_Repository.findById(id).get();
+//			System.out.println("Library:" + library);
+			model.addAttribute("library", library);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "library/edit_reservation";
+	}
+
+	@PostMapping("/edit_reserve")
+	public String ediReserve(@RequestParam("id") int id,
+			@RequestParam(value = "reserve", required = false) double reserve) {
+
+		System.out.println("id:" + id);
+		try {
+			Library li = this.library_Repository.findById(id).get();
+
+			li.setReserve(reserve);
+
+			Library lib = this.library_Repository.save(li);
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -327,5 +464,87 @@ public class LibraryController {
 //		return city;
 //		
 //	}
+	
+
+	/*
+	 * @GetMapping("/setting") public String open_settingPage() { return
+	 * "library/setting"; }
+	 */
+
+	/*
+	 * @GetMapping("/profile") public String open_ProfilePage(Model model, Principal
+	 * principal) { String name = principal.getName(); Library library =
+	 * this.library_Repository.findByEmail(name);
+	 * 
+	 * model.addAttribute("library", library); return "library/profile"; }
+	 */
+
+	
+	/*
+	 * @PostMapping("/library_edit") public String editlibrary(@RequestParam(value =
+	 * "image", required = false) MultipartFile image, Model model,
+	 * 
+	 * @RequestParam("id") int id, @RequestParam(value = "password", required =
+	 * false) String password,
+	 * 
+	 * @RequestParam(value = "contact", required = false) String contact,
+	 * 
+	 * @RequestParam(value = "location", required = false) String location,
+	 * 
+	 * @RequestParam(value = "city", required = false) String city,
+	 * 
+	 * @RequestParam(value = "state", required = false) String state,
+	 * 
+	 * @RequestParam(value = "pincode", required = false) String pincode,
+	 * 
+	 * @RequestParam(value = "totalSeat", required = false) int seat,
+	 * 
+	 * @RequestParam(value = "hours24", required = false) double hours24,
+	 * 
+	 * @RequestParam(value = "hours12", required = false) double hours12,
+	 * 
+	 * @RequestParam(value = "hours8", required = false) double hours8,
+	 * 
+	 * @RequestParam(value = "reserve", required = false) double reserve) {
+	 * 
+	 * String address = location + "," + city + "," + state + pincode; try { Library
+	 * li = this.library_Repository.findById(id).get(); Path imagePath =
+	 * Paths.get("static/img/" + li.getImage()); if (imagePath == null) {
+	 * Files.delete(imagePath); } else { System.out.println("image not found"); }
+	 * 
+	 * File file = new ClassPathResource("static/img").getFile();
+	 * 
+	 * Path path = Paths.get(file.getAbsolutePath() + File.separator +
+	 * image.getOriginalFilename());
+	 * 
+	 * Files.copy(image.getInputStream(), path,
+	 * StandardCopyOption.REPLACE_EXISTING);
+	 * 
+	 * li.setImage(image.getOriginalFilename());
+	 * 
+	 * li.setPassword(passwordEncoder.encode(password));
+	 * 
+	 * li.setCity(city.toUpperCase());
+	 * 
+	 * li.setContact(contact);
+	 * 
+	 * li.setLocation(location.toUpperCase());
+	 * 
+	 * li.setHours12(hours12);
+	 * 
+	 * li.setHours24(hours24);
+	 * 
+	 * li.setHours8(hours8);
+	 * 
+	 * li.setReserve(reserve);
+	 * 
+	 * li.setSeat(seat);
+	 * 
+	 * Library lib = this.library_Repository.save(li);
+	 * 
+	 * } catch (Exception e) { System.out.println(e); }
+	 * 
+	 * return "redirect:/library/home"; }
+	 */
 
 }

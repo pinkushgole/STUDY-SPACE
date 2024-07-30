@@ -23,13 +23,16 @@
 			<div class="row  m-3 ">
 				<div class="col-md-6 mt-4">
 					<div class="card ">
-						<img th:src="@{'/img/'+${library.image}}" width="100%"
+						<img loading="lazy" th:src="@{'/img/'+${library.image}}" width="100%"
 							class="card-img-top" alt="Server issue">
 
 					</div>
-					
-					<h3 class="text-center text-primary mt-5"><a href="" th:href="@{/library/edit_pic_page(id=${library.id})}"class="btn btn-primary text-white">Edit Profile Photo</a></h3>
-					
+
+					<h3 class="text-center text-primary mt-5">
+						<a href="" th:href="@{/library/edit_pic_page(id=${library.id})}"
+							class="btn btn-primary text-white">Edit Profile Photo</a>
+					</h3>
+
 				</div>
 				<div class="col-md-6 mt-4">
 					<table class="table p-4">
@@ -37,7 +40,7 @@
 							<tr>
 								<th>LIBRARY NAME :</th>
 								<td th:text="${library.name}"></td>
-								
+
 							</tr>
 							<tr>
 								<th>EMAIL :</th>
@@ -46,44 +49,51 @@
 							<tr>
 								<th>CONTACT :</th>
 								<td th:text="${library.contact}"></td>
-								<td><a href="" class="btn btn-primary text-white">Edit</a>
-								</td>
+								<td><a href=""
+									th:href="@{/library/edit_contact_page(id=${library.id})}"
+									class="btn btn-primary text-white">Edit</a></td>
 							</tr>
 							<tr>
 								<th>ADDRESS :</th>
 								<td th:text="${library.location}"></td>
-								<td><a href="" class="btn btn-primary text-white">Edit</a>
-								</td>
+								<td><a href=""
+									th:href="@{/library/edit_address_page(id=${library.id})}"
+									class="btn btn-primary text-white">Edit</a></td>
 							</tr>
 							<tr>
 								<th>TOTAL SEAT :</th>
 								<td th:text="${library.seat}"></td>
-								<td><a href="" class="btn btn-primary text-white">Edit</a>
-								</td>
+								<td><a href=""
+									th:href="@{/library/edit_seat_page(id=${library.id})}"
+									class="btn btn-primary text-white">Edit</a></td>
 							</tr>
 							<tr>
 								<th>Full Day Price :</th>
 								<td th:text="${library.hours24}"></td>
-								<td><a href="" class="btn btn-primary text-white">Edit</a>
-								</td>
+								<td><a href=""
+									th:href="@{/library/edit_fullday_page(id=${library.id})}"
+									class="btn btn-primary text-white">Edit</a></td>
 							</tr>
 							<tr>
 								<th>12 Hours price :</th>
 								<td th:text="${library.hours12}"></td>
-								<td><a href="" class="btn btn-primary text-white">Edit</a>
-								</td>
+								<td><a href=""
+									th:href="@{/library/edit_hours12_page(id=${library.id})}"
+									class="btn btn-primary text-white">Edit</a></td>
 							</tr>
 							<tr>
 								<th>8 Hours price :</th>
 								<td th:text="${library.hours8}"></td>
-								<td><a href="" class="btn btn-primary text-white">Edit</a>
-								</td>
+								<td><a href=""
+									th:href="@{/library/edit_hours8_page(id=${library.id})}"
+									class="btn btn-primary text-white">Edit</a></td>
 							</tr>
 							<tr>
 								<th>Reservation price :</th>
 								<td th:text="${library.reserve}"></td>
-								<td><a href="" class="btn btn-primary text-white">Edit</a>
-								</td>
+								<td><a href=""
+									th:href="@{/library/edit_reservation_page(id=${library.id})}"
+									class="btn btn-primary text-white">Edit</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -98,7 +108,7 @@
 	</div>
 
 
-	
+
 	<div th:replace="~{component :: mini_footer}"></div>
 
 </body>
